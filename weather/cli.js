@@ -31,6 +31,7 @@ function _toCelcius(temp) {
 
 updateNotifier({ pkg}).notify();
 
+//Give the details of the weather (temperature, condition) in a city : Here the city is 
 weather(cli.input, (err, result) => {
 	if (err) {
 		console.log(chalk.bold.red(err));
@@ -40,6 +41,7 @@ weather(cli.input, (err, result) => {
 	let condition = result.query.results.channel.item.condition.text;
 	let temperature;
 
+	//Define the temperature in Celsius if it is necessary
 	if (cli.input[2] && cli.input[2] === 'C') {
 		temperature = _toCelcius(result.query.results.channel.item.condition.temp) + 'C';
 	} else if (cli.input[2] && cli.input[2] === 'F') {
@@ -48,9 +50,11 @@ weather(cli.input, (err, result) => {
 		temperature = _toCelcius(result.query.results.channel.item.condition.temp) + 'C';
 	}
 
+	//Verify if the parameter is defined, else it takes the value : Dhaka for the city and Bangladesh for the country.
 	let city = cli.input[0] ? cli.input[0] : 'Dhaka';
 	let country = cli.input[1] ? cli.input[1] : 'Bangladesh';
 
+	//Write the details of the weather
 	console.log(chalk.red(city + ', ' + country));
 	console.log(chalk.cyan('Condition: ' + chalk.yellow(condition)));
 	console.log(chalk.cyan('Temperature: ' + chalk.yellow(temperature)));
